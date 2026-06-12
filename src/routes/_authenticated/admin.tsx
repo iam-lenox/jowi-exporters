@@ -172,7 +172,7 @@ function StatusSelect({ shipmentId, value }: { shipmentId: string; value: Shipme
     <Select
       value={value}
       onValueChange={async (v) => {
-        const { error } = await supabase.from("shipments").update({ status: v }).eq("id", shipmentId);
+        const { error } = await supabase.from("shipments").update({ status: v as ShipmentStatus }).eq("id", shipmentId);
         if (error) { toast.error(error.message); return; }
         toast.success("Status updated");
         qc.invalidateQueries({ queryKey: ["admin-shipments"] });
