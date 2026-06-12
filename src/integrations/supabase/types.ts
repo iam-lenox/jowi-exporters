@@ -14,16 +14,209 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      contact_messages: {
+        Row: {
+          company: string | null
+          created_at: string
+          email: string
+          id: string
+          message: string
+          name: string
+          phone: string | null
+        }
+        Insert: {
+          company?: string | null
+          created_at?: string
+          email: string
+          id?: string
+          message: string
+          name: string
+          phone?: string | null
+        }
+        Update: {
+          company?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string
+          name?: string
+          phone?: string | null
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          company: string | null
+          created_at: string
+          email: string | null
+          full_name: string | null
+          id: string
+          phone: string | null
+          updated_at: string
+        }
+        Insert: {
+          company?: string | null
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Update: {
+          company?: string | null
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      shipments: {
+        Row: {
+          awb_number: string
+          client_id: string | null
+          created_at: string
+          current_lat: number | null
+          current_lng: number | null
+          current_location: string | null
+          departure_date: string | null
+          destination: string
+          estimated_arrival: string | null
+          id: string
+          notes: string | null
+          origin: string
+          product_type: string
+          status: Database["public"]["Enums"]["shipment_status"]
+          updated_at: string
+          weight_kg: number | null
+        }
+        Insert: {
+          awb_number: string
+          client_id?: string | null
+          created_at?: string
+          current_lat?: number | null
+          current_lng?: number | null
+          current_location?: string | null
+          departure_date?: string | null
+          destination: string
+          estimated_arrival?: string | null
+          id?: string
+          notes?: string | null
+          origin: string
+          product_type: string
+          status?: Database["public"]["Enums"]["shipment_status"]
+          updated_at?: string
+          weight_kg?: number | null
+        }
+        Update: {
+          awb_number?: string
+          client_id?: string | null
+          created_at?: string
+          current_lat?: number | null
+          current_lng?: number | null
+          current_location?: string | null
+          departure_date?: string | null
+          destination?: string
+          estimated_arrival?: string | null
+          id?: string
+          notes?: string | null
+          origin?: string
+          product_type?: string
+          status?: Database["public"]["Enums"]["shipment_status"]
+          updated_at?: string
+          weight_kg?: number | null
+        }
+        Relationships: []
+      }
+      tracking_events: {
+        Row: {
+          created_at: string
+          event_at: string
+          id: string
+          lat: number | null
+          lng: number | null
+          location: string | null
+          notes: string | null
+          shipment_id: string
+          status: Database["public"]["Enums"]["shipment_status"]
+        }
+        Insert: {
+          created_at?: string
+          event_at?: string
+          id?: string
+          lat?: number | null
+          lng?: number | null
+          location?: string | null
+          notes?: string | null
+          shipment_id: string
+          status: Database["public"]["Enums"]["shipment_status"]
+        }
+        Update: {
+          created_at?: string
+          event_at?: string
+          id?: string
+          lat?: number | null
+          lng?: number | null
+          location?: string | null
+          notes?: string | null
+          shipment_id?: string
+          status?: Database["public"]["Enums"]["shipment_status"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tracking_events_shipment_id_fkey"
+            columns: ["shipment_id"]
+            isOneToOne: false
+            referencedRelation: "shipments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "client"
+      shipment_status:
+        | "pending"
+        | "in_transit"
+        | "arrived"
+        | "delivered"
+        | "cancelled"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +343,15 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "client"],
+      shipment_status: [
+        "pending",
+        "in_transit",
+        "arrived",
+        "delivered",
+        "cancelled",
+      ],
+    },
   },
 } as const
