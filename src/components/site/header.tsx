@@ -17,6 +17,7 @@ const nav = [
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const { user } = useAuth();
+  const { isAdmin } = useIsAdmin(user?.id);
   const router = useRouter();
 
   async function signOut() {
