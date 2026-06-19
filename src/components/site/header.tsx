@@ -54,9 +54,13 @@ export function SiteHeader() {
         <div className="hidden items-center gap-2 md:flex">
           {user ? (
             <>
-              {isAdmin && (
+              {isAdmin ? (
                 <Button asChild variant="ghost" size="sm">
                   <Link to="/admin">Admin</Link>
+                </Button>
+              ) : (
+                <Button asChild size="sm">
+                  <Link to="/dashboard">Track shipment</Link>
                 </Button>
               )}
               <Button asChild variant="ghost" size="sm">
@@ -67,14 +71,9 @@ export function SiteHeader() {
               </Button>
             </>
           ) : (
-            <>
-              <Button asChild variant="ghost" size="sm">
-                <Link to="/auth">Sign in</Link>
-              </Button>
-              <Button asChild size="sm">
-                <Link to="/auth">Track shipment</Link>
-              </Button>
-            </>
+            <Button asChild variant="ghost" size="sm">
+              <Link to="/auth">Sign in</Link>
+            </Button>
           )}
         </div>
 
@@ -103,9 +102,13 @@ export function SiteHeader() {
             <div className="mt-2 flex flex-col gap-2 border-t border-border/60 pt-3">
               {user ? (
                 <>
-                  {isAdmin && (
+                  {isAdmin ? (
                     <Button asChild variant="outline" size="sm">
                       <Link to="/admin" onClick={() => setOpen(false)}>Admin</Link>
+                    </Button>
+                  ) : (
+                    <Button asChild size="sm">
+                      <Link to="/dashboard" onClick={() => setOpen(false)}>Track shipment</Link>
                     </Button>
                   )}
                   <Button asChild variant="outline" size="sm">
