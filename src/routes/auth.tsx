@@ -1,5 +1,6 @@
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
 import logo from "@/assets/logo.png";
 import { Button } from "@/components/ui/button";
@@ -23,6 +24,8 @@ function AuthPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [tab, setTab] = useState<"signin" | "signup">("signin");
+  const [showSignInPw, setShowSignInPw] = useState(false);
+  const [showSignUpPw, setShowSignUpPw] = useState(false);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -131,7 +134,7 @@ function AuthPage() {
                 </div>
                 <div>
                   <Label htmlFor="si-password">Password</Label>
-                  <Input id="si-password" name="password" type="password" required className="mt-1.5" />
+                  <PasswordInput id="si-password" name="password" required show={showSignInPw} onToggle={() => setShowSignInPw((s) => !s)} />
                 </div>
                 <Button type="submit" className="w-full" disabled={loading}>
                   {loading ? "Signing in…" : "Sign in"}
@@ -161,7 +164,7 @@ function AuthPage() {
                 </div>
                 <div>
                   <Label htmlFor="su-password">Password</Label>
-                  <Input id="su-password" name="password" type="password" required minLength={8} className="mt-1.5" />
+                  <PasswordInput id="su-password" name="password" required minLength={8} show={showSignUpPw} onToggle={() => setShowSignUpPw((s) => !s)} />
                 </div>
                 <Button type="submit" className="w-full" disabled={loading}>
                   {loading ? "Creating account…" : "Create account"}
@@ -185,6 +188,24 @@ function AuthPage() {
           </p>
         </div>
       </div>
+    </div>
+  );
+}
+
+function PasswordInput({
+  id, name, required, minLength, show, onToggle,
+}: { id: string; name: string; required?: boolean; minLength?: number; show: boolean; onToggle: () => void }) {
+  return (
+    <div className="relative mt-1.5">
+      <Input id={id} name={name} type={show ? "text" : "password"} required={required} minLength={minLength} className="pr-10" />
+      <button
+        type="button"
+        onClick={onToggle}
+        aria-label={show ? "Hide password" : "Show password"}
+        className="absolute inset-y-0 right-0 flex items-center px-3 text-muted-foreground transition hover:text-foreground"
+      >
+        {show ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+      </button>
     </div>
   );
 }
