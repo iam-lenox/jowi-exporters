@@ -212,7 +212,7 @@ function ShipmentCard({
   return (
     <button
       onClick={onSelect}
-      className={`text-left rounded-2xl border bg-card p-5 transition hover:shadow-md ${
+      className={`text-left rounded-2xl border bg-card p-5 animate-fade-in transition-all duration-300 hover:shadow-lg hover:-translate-y-1 ${
         active ? "border-primary ring-2 ring-primary/30" : "border-border/70"
       }`}
     >

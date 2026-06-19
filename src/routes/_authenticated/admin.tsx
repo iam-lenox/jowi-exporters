@@ -56,7 +56,7 @@ function AdminPage() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+      <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 animate-fade-in">
         <h1 className="font-display text-3xl font-semibold">Operations console</h1>
         <p className="mt-1 text-muted-foreground">Manage shipments, tracking updates, clients and messages.</p>
 
