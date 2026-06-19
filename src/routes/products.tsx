@@ -1,5 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import productsImg from "@/assets/products.jpg";
+import basilImg from "@/assets/products/basil.jpg";
+import thymeImg from "@/assets/products/thyme.jpg";
+import rosemaryImg from "@/assets/products/rosemary.jpg";
+import mintImg from "@/assets/products/mint.jpg";
+import chivesImg from "@/assets/products/chives.jpg";
+import oreganoImg from "@/assets/products/oregano.jpg";
+import avocadoImg from "@/assets/products/avocado.jpg";
+import passionFruitImg from "@/assets/products/passion-fruit.jpg";
 import { SiteHeader } from "@/components/site/header";
 import { SiteFooter } from "@/components/site/footer";
 import { Button } from "@/components/ui/button";
@@ -21,18 +29,44 @@ export const Route = createFileRoute("/products")({
 });
 
 const herbs = [
-  { name: "Basil", note: "Sweet Genovese, large-leaf", season: "Year round" },
-  { name: "Thyme", note: "Common & lemon thyme", season: "Year round" },
-  { name: "Rosemary", note: "Long stem, fragrant", season: "Year round" },
-  { name: "Mint", note: "Spearmint & peppermint", season: "Year round" },
-  { name: "Chives", note: "Tied bunches, 100g packs", season: "Year round" },
-  { name: "Oregano", note: "Greek oregano sprigs", season: "Year round" },
+  { name: "Basil", note: "Sweet Genovese, large-leaf", season: "Year round", image: basilImg },
+  { name: "Thyme", note: "Common & lemon thyme", season: "Year round", image: thymeImg },
+  { name: "Rosemary", note: "Long stem, fragrant", season: "Year round", image: rosemaryImg },
+  { name: "Mint", note: "Spearmint & peppermint", season: "Year round", image: mintImg },
+  { name: "Chives", note: "Tied bunches, 100g packs", season: "Year round", image: chivesImg },
+  { name: "Oregano", note: "Greek oregano sprigs", season: "Year round", image: oreganoImg },
 ];
 
 const fruits = [
-  { name: "Hass Avocado", note: "Counts 16–32, oil ≥23%", season: "Mar – Oct" },
-  { name: "Passion Fruit", note: "Purple, Brix 14–16", season: "Year round" },
+  { name: "Hass Avocado", note: "Counts 16–32, oil ≥23%", season: "Mar – Oct", image: avocadoImg },
+  { name: "Passion Fruit", note: "Purple, Brix 14–16", season: "Year round", image: passionFruitImg },
 ];
+
+function ProductCard({ item, accent }: { item: { name: string; note: string; season: string; image: string }; accent: "primary" | "secondary" }) {
+  return (
+    <div className="group overflow-hidden rounded-2xl border border-border/70 bg-card transition-all duration-500 hover:-translate-y-1 hover:shadow-xl animate-fade-in">
+      <div className="aspect-[4/3] overflow-hidden bg-muted">
+        <img
+          src={item.image}
+          alt={`Fresh ${item.name} from Kenya`}
+          loading="lazy"
+          width={1024}
+          height={1024}
+          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+        />
+      </div>
+      <div className="p-6">
+        <div className="flex items-center justify-between gap-3">
+          <h3 className="font-display text-xl font-semibold">{item.name}</h3>
+          <Badge variant="secondary" className={accent === "primary" ? "bg-primary/10 text-primary" : "bg-secondary/10 text-secondary"}>
+            {item.season}
+          </Badge>
+        </div>
+        <p className="mt-2 text-sm text-muted-foreground">{item.note}</p>
+      </div>
+    </div>
+  );
+}
 
 function ProductsPage() {
   return (
@@ -65,26 +99,14 @@ function ProductsPage() {
           <h2 className="font-display text-2xl font-semibold">Aromatic herbs</h2>
           <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {herbs.map((h) => (
-              <div key={h.name} className="rounded-2xl border border-border/70 bg-card p-6">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-display text-xl font-semibold">{h.name}</h3>
-                  <Badge variant="secondary" className="bg-primary/10 text-primary">{h.season}</Badge>
-                </div>
-                <p className="mt-2 text-sm text-muted-foreground">{h.note}</p>
-              </div>
+              <ProductCard key={h.name} item={h} accent="primary" />
             ))}
           </div>
 
           <h2 className="mt-16 font-display text-2xl font-semibold">Fresh fruit</h2>
           <div className="mt-6 grid gap-5 sm:grid-cols-2">
             {fruits.map((f) => (
-              <div key={f.name} className="rounded-2xl border border-border/70 bg-card p-6">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-display text-xl font-semibold">{f.name}</h3>
-                  <Badge variant="secondary" className="bg-secondary/10 text-secondary">{f.season}</Badge>
-                </div>
-                <p className="mt-2 text-sm text-muted-foreground">{f.note}</p>
-              </div>
+              <ProductCard key={f.name} item={f} accent="secondary" />
             ))}
           </div>
 
