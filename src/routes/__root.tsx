@@ -129,6 +129,31 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const router = useRouter();
 
+  // Subdomain routing: admin.<domain> serves the admin console only.
+  // Root domain hides /admin entirely (redirects to the admin subdomain).
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const host = window.location.hostname;
+    const path = window.location.pathname;
+
+    // Skip on localhost and Lovable preview/staging hosts — only apply on real custom domain.
+    const isLovableHost = host.endsWith("lovable.app") || host === "localhost" || host.startsWith("127.");
+    if (isLovableHost) return;
+
+    const isAdminHost = host.startsWith("admin.");
+    const rootHost = isAdminHost ? host.slice("admin.".length) : host;
+
+    if (isAdminHost) {
+      // On the admin subdomain, force everyone onto the admin console.
+      if (path === "/" || path === "") {
+        router.navigate({ to: "/admin", replace: true });
+      }
+    } else if (path.startsWith("/admin")) {
+      // On the root domain, the admin URL must not be reachable — send to admin subdomain.
+      window.location.replace(`${window.location.protocol}//admin.${rootHost}/admin`);
+    }
+  }, [router]);
+
   useEffect(() => {
     const { data: sub } = supabase.auth.onAuthStateChange((event) => {
       if (event !== "SIGNED_IN" && event !== "SIGNED_OUT" && event !== "USER_UPDATED") return;
@@ -137,6 +162,7 @@ function RootComponent() {
     });
     return () => sub.subscription.unsubscribe();
   }, [router, queryClient]);
+
 
   return (
     <QueryClientProvider client={queryClient}>
