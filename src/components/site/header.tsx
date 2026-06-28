@@ -1,7 +1,7 @@
 import { Link, useRouter } from "@tanstack/react-router";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
-import logo from "@/assets/logo.png";
+import logoAsset from "@/assets/jowi-logo.jpeg.asset.json";
 import { Button } from "@/components/ui/button";
 import { useAuth, useIsAdmin } from "@/hooks/use-auth";
 import { supabase } from "@/integrations/supabase/client";
@@ -28,14 +28,8 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-background/85 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link to="/" className="flex items-center gap-2.5">
-          <img src={logo} alt="" width={32} height={32} className="h-8 w-8" />
-          <div className="leading-tight">
-            <div className="font-display text-lg font-semibold tracking-tight">Jowi Exporters</div>
-            <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-              From Kenya to the World
-            </div>
-          </div>
+        <Link to="/" className="flex items-center">
+          <img src={logoAsset.url} alt="Jowi Exporters Ltd — From Kenya to the World" className="h-12 w-auto sm:h-14" />
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex">
