@@ -2,7 +2,8 @@ import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
-import logo from "@/assets/logo.png";
+import logoAsset from "@/assets/jowi-logo.jpeg.asset.json";
+import farmToPort from "@/assets/farm-to-port.jpg";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -91,28 +92,34 @@ function AuthPage() {
 
   return (
     <div className="grid min-h-screen lg:grid-cols-2">
-      <div className="hidden bg-gradient-to-br from-primary via-primary to-secondary/70 p-12 text-primary-foreground lg:flex lg:flex-col lg:justify-between">
-        <Link to="/" className="flex items-center gap-2.5">
-          <img src={logo} alt="" width={36} height={36} className="h-9 w-9 brightness-0 invert" />
-          <span className="font-display text-xl font-semibold">Jowi Exporters</span>
+      <div className="relative hidden overflow-hidden lg:flex lg:flex-col lg:justify-between p-12 text-white">
+        {/* Animated Farm → Port background */}
+        <div
+          className="absolute inset-0 -z-10 bg-cover bg-center animate-farm-to-port"
+          style={{ backgroundImage: `url(${farmToPort})`, backgroundSize: "180% 100%" }}
+          aria-hidden
+        />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-br from-primary/70 via-primary/40 to-secondary/70" aria-hidden />
+
+        <Link to="/" className="relative flex items-center">
+          <img src={logoAsset.url} alt="Jowi Exporters Ltd" className="h-16 w-auto rounded-md bg-white/90 p-1.5 shadow-lg" />
         </Link>
-        <div>
-          <h2 className="font-display text-4xl font-semibold leading-tight">
-            Track every shipment, from farm to port.
+        <div className="relative animate-fade-in">
+          <h2 className="font-display text-4xl font-semibold leading-tight drop-shadow">
+            From farm to port — every shipment, in motion.
           </h2>
-          <p className="mt-4 max-w-md text-primary-foreground/85">
+          <p className="mt-4 max-w-md text-white/90 drop-shadow">
             Sign in to your Jowi client portal to follow your AWB live, download documents and
             chat with our export team.
           </p>
         </div>
-        <p className="text-xs uppercase tracking-[0.2em] text-primary-foreground/60">From Kenya to the World</p>
+        <p className="relative text-xs uppercase tracking-[0.2em] text-white/80">From Kenya to the World</p>
       </div>
 
       <div className="flex items-center justify-center p-6 sm:p-10">
         <div className="w-full max-w-md">
-          <div className="lg:hidden mb-8 flex items-center gap-2.5">
-            <img src={logo} alt="" width={32} height={32} className="h-8 w-8" />
-            <span className="font-display text-lg font-semibold">Jowi Exporters</span>
+          <div className="lg:hidden mb-8 flex items-center">
+            <img src={logoAsset.url} alt="Jowi Exporters Ltd" className="h-12 w-auto" />
           </div>
 
           <h1 className="font-display text-3xl font-semibold">Client portal</h1>

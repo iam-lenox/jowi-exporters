@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Mail, MapPin, Phone } from "lucide-react";
-import logo from "@/assets/logo.png";
+import logoAsset from "@/assets/jowi-logo.jpeg.asset.json";
 
 export function SiteFooter() {
   return (
@@ -8,8 +8,7 @@ export function SiteFooter() {
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-4 lg:px-8">
         <div>
           <div className="flex items-center gap-2.5">
-            <img src={logo} alt="" width={32} height={32} className="h-8 w-8" />
-            <span className="font-display text-lg font-semibold">Jowi Exporters</span>
+            <img src={logoAsset.url} alt="Jowi Exporters Ltd" className="h-14 w-auto" />
           </div>
           <p className="mt-3 text-sm text-muted-foreground">
             Kenyan-grown herbs, avocados and passion fruit, exported fresh to discerning kitchens
