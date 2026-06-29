@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Mail, MapPin, Phone } from "lucide-react";
-import logoAsset from "@/assets/jowi-logo.jpeg.asset.json";
+import logoAsset from "@/assets/jowi-logo.png.asset.json";
 
 export function SiteFooter() {
   return (
